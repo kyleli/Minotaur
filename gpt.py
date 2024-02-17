@@ -1,16 +1,11 @@
-from openai import OpenAI
+import openai
 import config
-
-client = OpenAI(
-    base_url = 'http://localhost:11434/v1',
-    api_key='ollama', # required, but unused
-)
 
 def initialize_gpt(API_KEY):
     """
     Initializes GPT with the key. Run before running any other GPT related functions.
     """
-    #openai.api_key = API_KEY
+    openai.api_key = API_KEY
 
 def initialize_system_prompt(SYSTEM_PROMPT, TRANSCRIPT_PATH):
     """
@@ -43,7 +38,7 @@ def request_response(MODEL_ID, TEMPERATURE, PRESENCE_PENALTY, conversation_log):
     - tokens (int): The total number of tokens used in the API response.
     - conversation_log (list): The updated conversation log with the new response appended.
     """
-    response = client.chat.completions.create(
+    response = openai.ChatCompletion.create(
         model=MODEL_ID,
         temperature=TEMPERATURE,
         presence_penalty=PRESENCE_PENALTY,
