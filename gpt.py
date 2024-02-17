@@ -75,7 +75,12 @@ if __name__ == '__main__':
     conversation_log = []
     conversation_log = initialize_system_prompt(config.SYSTEM_PROMPT, 'debug_examples\sample_transcript_2.txt')
     if config.IS_LOCAL:
-        response = conversation_log = request_response("mistral", 0.2, -0.2, conversation_log)
+        response = conversation_log = process_summarization_query("mistral", 0.2, -0.2, conversation_log, """This is a decision making meeting.
+Summarize the meeting transcript and create minutes that follow this template:
+- List of all present meeting members
+- Decisions Made
+- Next Steps Planned
+- Identification and Tracking of Action Items""", "", "")
     else:
         response = process_summarization_query("gpt-3.5-turbo", 0.2, -0.2, conversation_log, """This is a decision making meeting.
 Summarize the meeting transcript and create minutes that follow this template:
