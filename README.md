@@ -6,6 +6,9 @@ Minotaur is a command-line interface (CLI) tool designed to simplify various tas
 Minotaur has minimal dependencies:
 - Python
 - OpenAI API
+- pyaudio
+- keyboard
+- pyaudio
 
 ## Setup
 1. Clone the Minotaur repository from GitHub.
