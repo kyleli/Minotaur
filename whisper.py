@@ -3,14 +3,11 @@ from config import CONVERSATION_TYPE, LANGUAGE, WHISPER_MODEL_ID
 
 def convert_audio(api_key, media_file_path, TRANSCRIPT_PATH):
     """
-    Converts audio file to text using OpenAI's Whisper ASR API.
+    Converts audio file to text using OpenAI's Whisper API and stores the transcript in a text file.
 
     Args:
     - api_key (str): The API key for accessing the OpenAI API.
     - media_file_path (str): The path to the audio file.
-
-    Returns:
-    - None
     """
     with open(media_file_path, 'rb') as media_file:
         response = openai.Audio.transcribe(

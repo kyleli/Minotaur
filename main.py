@@ -49,7 +49,7 @@ def HandleGPTSummarization():
             user_input = input("Finalize this summmary? (y/n): ")
             if user_input.lower() == 'y':
                 accepted = True
-                fileprocessing.write_output_to_file(summary)
+                fileprocessing.write_output_to_file(summary, 'summary.txt')
                 print("Saved Summary to debug_examples/summary.txt")
             else:
                 # Currently hardcoded, need the generation algo here.
