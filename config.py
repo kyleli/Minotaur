@@ -7,6 +7,7 @@ WHISPER_MODEL_ID = 'whisper-1'
 AUDIO_PATH = 'output.mp3'
 
 # GPT Config
+IS_LOCAL = False
 MODEL_ID = 'gpt-3.5-turbo'
 TEMPERATURE = 0.2
 PRESENCE_PENALTY = -0.1
