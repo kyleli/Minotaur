@@ -30,18 +30,18 @@ def HandleGPTSummarization():
     accepted = False
 
     while not accepted:
-        conversations = []
+        conversation_log = []
         
         if ENABLE_GPT:
             gpt.initialize_gpt(API_KEY)
             if ENABLE_DEBUG_TRANSCRIPT:
-                conversations = gpt.initialize_system_prompt(SYSTEM_PROMPT, DEBUG_TRANSCRIPT_PATH)
+                conversation_log = gpt.initialize_system_prompt(SYSTEM_PROMPT, DEBUG_TRANSCRIPT_PATH)
             else:
-                conversations = gpt.initialize_system_prompt(SYSTEM_PROMPT, TRANSCRIPT_PATH)
+                conversation_log = gpt.initialize_system_prompt(SYSTEM_PROMPT, TRANSCRIPT_PATH)
 
             print("Processing Summary")
             summarization_command = fileprocessing.read_from_file(SUMMARY_COMMAND_PATH)
-            summary = gpt.process_summarization_query(MODEL_ID, TEMPERATURE, PRESENCE_PENALTY, conversations, summarization_command, summary, modification_commands)
+            summary = gpt.process_summarization_query(MODEL_ID, TEMPERATURE, PRESENCE_PENALTY, conversation_log, summarization_command, summary, modification_commands)
             print(summary)
             print("Completed Processing")
 

@@ -1,30 +1,35 @@
-import openai
+from openai import OpenAI
 import config
+
+client = OpenAI(
+    base_url = 'http://localhost:11434/v1',
+    api_key='ollama', # required, but unused
+)
 
 def initialize_gpt(API_KEY):
     """
     Initializes GPT with the key. Run before running any other GPT related functions.
     """
-    openai.api_key = API_KEY
+    #openai.api_key = API_KEY
 
 def initialize_system_prompt(SYSTEM_PROMPT, TRANSCRIPT_PATH):
     """
-    Initializes the conversations list with system instructions containing the system prompt and the transcript content.
+    Initializes the conversation_log list with system instructions containing the system prompt and the transcript content.
 
     Args:
     - SYSTEM_PROMPT (str): The system prompt text to be injected.
     - TRANSCRIPT_PATH (str): The path to the transcript file to read from.
 
     Returns:
-    - conversations (list): The list of conversation objects to be fed back and used in further entry calls.
+    - conversation_log (list): The list of conversation objects to be fed back and used in further entry calls.
     """
-    conversations = []
+    conversation_log = []
 
     with open(TRANSCRIPT_PATH, 'r') as file:
         transcript = file.read()
     
-    conversations.append({'role': 'system', 'content': SYSTEM_PROMPT + "\n The following is the meeting transcript: \n" + transcript})
-    return conversations
+    conversation_log.append({'role': 'system', 'content': SYSTEM_PROMPT + "\n The following is the meeting transcript: \n" + transcript})
+    return conversation_log
 
 def request_response(MODEL_ID, TEMPERATURE, PRESENCE_PENALTY, conversation_log):
     """
@@ -38,7 +43,7 @@ def request_response(MODEL_ID, TEMPERATURE, PRESENCE_PENALTY, conversation_log):
     - tokens (int): The total number of tokens used in the API response.
     - conversation_log (list): The updated conversation log with the new response appended.
     """
-    response = openai.ChatCompletion.create(
+    response = client.chat.completions.create(
         model=MODEL_ID,
         temperature=TEMPERATURE,
         presence_penalty=PRESENCE_PENALTY,
@@ -64,16 +69,16 @@ def process_summarization_query(MODEL_ID: str, TEMPERATURE: float, PRESENCE_PENA
     Returns:
     - str: The updated summary.
     """ 
-    conversations.append({'role': 'user', 'content': summarization_command + "\n" + summary + "\n" + modification_commands})
-    tokens, conversations = request_response(MODEL_ID, TEMPERATURE, PRESENCE_PENALTY, conversations)
-    return f"SUMMARY: {conversations[-1]['content'].strip()}\n"
+    conversation_log.append({'role': 'user', 'content': summarization_command + "\n" + summary + "\n" + modification_commands})
+    tokens, conversation_log = request_response(MODEL_ID, TEMPERATURE, PRESENCE_PENALTY, conversation_log)
+    return f"SUMMARY: {conversation_log[-1]['content'].strip()}\n"
 
 if __name__ == '__main__':
-    conversations = []
+    conversation_log = []
     api_key = input("API KEY: ")
     initialize_gpt(api_key)
-    conversations = initialize_system_prompt(config.SYSTEM_PROMPT, 'debug_examples\sample_transcript_2.txt')
-    response = process_summarization_query("gpt-3.5-turbo", 0.2, -0.2, conversations, """This is a decision making meeting.
+    conversation_log = initialize_system_prompt(config.SYSTEM_PROMPT, 'debug_examples\sample_transcript_2.txt')
+    response = process_summarization_query("gpt-3.5-turbo", 0.2, -0.2, conversation_log, """This is a decision making meeting.
 Summarize the meeting transcript and create minutes that follow this template:
 - List of all present meeting members
 - Decisions Made

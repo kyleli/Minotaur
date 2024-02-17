@@ -9,8 +9,8 @@ AUDIO_PATH = 'output.mp3'
 # GPT Config
 MODEL_ID = 'gpt-3.5-turbo'
 TEMPERATURE = 0.2
-PRESENCE_PENALTY = -0.2
-MAX_TOKENS = 4096
+PRESENCE_PENALTY = -0.1
+MAX_TOKENS = 4096 # DEPRECATED THAT
 TRANSCRIPT_PATH = 'transcript.txt'
 SYSTEM_PROMPT = """
 You are a summarization tool designed to summarize meeting minutes.
