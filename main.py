@@ -33,7 +33,6 @@ def HandleGPTSummarization():
         conversation_log = []
         
         if ENABLE_GPT:
-            gpt.initialize_gpt(API_KEY)
             if ENABLE_DEBUG_TRANSCRIPT:
                 conversation_log = gpt.initialize_system_prompt(SYSTEM_PROMPT, DEBUG_TRANSCRIPT_PATH)
             else:
