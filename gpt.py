@@ -27,7 +27,7 @@ def initialize_system_prompt(SYSTEM_PROMPT, TRANSCRIPT_PATH):
     with open(TRANSCRIPT_PATH, 'r') as file:
         transcript = file.read()
     
-    conversation_log.append({'role': 'system', 'content': SYSTEM_PROMPT + "\n The following is the meeting transcript: \n" + transcript})
+    conversation_log.append({'role': 'system', 'content': SYSTEM_PROMPT + "\n The following is the meeting transcript to summarize: \n" + transcript})
     return conversation_log
 
 def request_response(MODEL_ID, TEMPERATURE, PRESENCE_PENALTY, conversation_log):
@@ -73,16 +73,16 @@ def process_summarization_query(MODEL_ID: str, TEMPERATURE: float, PRESENCE_PENA
 
 if __name__ == '__main__':
     conversation_log = []
-    conversation_log = initialize_system_prompt(config.SYSTEM_PROMPT, 'debug_examples\sample_transcript_2.txt')
+    conversation_log = initialize_system_prompt(config.SYSTEM_PROMPT, 'debug_examples/real_meeting_transcript.txt')
     if config.IS_LOCAL:
-        response = conversation_log = process_summarization_query("mistral", 0.2, -0.2, conversation_log, """This is a decision making meeting.
+        response = conversation_log = process_summarization_query("mistral", 0.2, -0.1, conversation_log, """This is a decision making meeting.
 Summarize the meeting transcript and create minutes that follow this template:
 - List of all present meeting members
 - Decisions Made
 - Next Steps Planned
 - Identification and Tracking of Action Items""", "", "")
     else:
-        response = process_summarization_query("gpt-3.5-turbo", 0.2, -0.2, conversation_log, """This is a decision making meeting.
+        response = process_summarization_query("gpt-3.5-turbo", 0.2, -0.1, conversation_log, """This is a decision making meeting.
 Summarize the meeting transcript and create minutes that follow this template:
 - List of all present meeting members
 - Decisions Made

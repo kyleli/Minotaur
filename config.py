@@ -7,7 +7,7 @@ WHISPER_MODEL_ID = 'whisper-1'
 AUDIO_PATH = 'output.mp3'
 
 # GPT Config
-IS_LOCAL = False
+IS_LOCAL = True
 MODEL_ID = 'gpt-3.5-turbo'
 TEMPERATURE = 0.2
 PRESENCE_PENALTY = -0.1
@@ -34,6 +34,6 @@ ENABLE_GPT = True
 
 # DEBUGGING EXAMPLE FILES
 ENABLE_DEBUG_TRANSCRIPT = True
-DEBUG_TRANSCRIPT_PATH = 'debug_examples/sample_transcript_2.txt'
+DEBUG_TRANSCRIPT_PATH = 'debug_examples/meeting_transcript.txt'
 ENABLE_DEBUG_AUDIO = True
-DEBUG_AUDIO_PATH = 'debug_examples/64kbps_sample.mp3'
+DEBUG_AUDIO_PATH = 'debug_examples/meeting_sample.mp3'

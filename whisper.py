@@ -1,7 +1,9 @@
-import openai
+from openai import OpenAI
 from config import CONVERSATION_TYPE, LANGUAGE, WHISPER_MODEL_ID
 
-def convert_audio(api_key, media_file_path, TRANSCRIPT_PATH):
+client = OpenAI()
+
+def convert_audio(media_file_path, TRANSCRIPT_PATH):
     """
     Converts audio file to text using OpenAI's Whisper API and stores the transcript in a text file.
 
@@ -10,8 +12,7 @@ def convert_audio(api_key, media_file_path, TRANSCRIPT_PATH):
     - media_file_path (str): The path to the audio file.
     """
     with open(media_file_path, 'rb') as media_file:
-        response = openai.Audio.transcribe(
-            api_key=api_key,
+        response = client.audio.transcriptions.create(
             model=WHISPER_MODEL_ID,
             file=media_file,
             prompt=f"This is a conversation about {CONVERSATION_TYPE} in {LANGUAGE}.",
@@ -21,5 +22,4 @@ def convert_audio(api_key, media_file_path, TRANSCRIPT_PATH):
             transcript_file.write(response)
         
 if __name__ == '__main__':
-    api_key = input("API KEY: ")
-    convert_audio(api_key, 'transcript.txt')
+    convert_audio('debug_examples/real_meeting_sample.mp3', 'transcript.txt')

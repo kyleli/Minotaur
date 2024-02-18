@@ -1,4 +1,4 @@
-This is a decision making meeting.
+SUMMARIZATION COMMANDS:
 Summarize the meeting transcript and create minutes that follow this template:
 - List of all present meeting members
 - Decisions Made
